@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, FastAPI, status, Response
 from sqlalchemy.orm import Session
 from ..controllers import customers as controller
 from ..schemas import customers as schema
+from ..schemas import orders as order_schema
 from ..dependencies.database import engine, get_db
 
 router = APIRouter(
@@ -23,6 +24,11 @@ def read_all(db: Session = Depends(get_db)):
 @router.get("/{customer_id}", response_model=schema.Customer)
 def read_one(customer_id: int, db: Session = Depends(get_db)):
     return controller.read_one(db, customer_id=customer_id)
+
+
+@router.get("/{customer_id}", response_model=order_schema.Order)
+def read_orders(customer_id: int, db: Session = Depends(get_db)):
+    return controller.read_orders(db, customer_id=customer_id)
 
 
 @router.put("/{customer_id}", response_model=schema.Customer)

@@ -23,6 +23,7 @@ class CustomerUpdate(BaseModel):
 
 class Customer(CustomerBase):
     id: int
+    role: Optional[str] = None
 
     class ConfigDict:
         from_attributes = True

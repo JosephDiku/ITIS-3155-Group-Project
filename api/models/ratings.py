@@ -9,3 +9,5 @@ class Rating(Base):
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     review_text = Column(String(100))
     score = Column(DECIMAL(10,2))
+
+    ## customer = relationship("Customer", back_populates="ratings")

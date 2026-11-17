@@ -9,9 +9,13 @@ class Order(Base):
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     customer_name = Column(String(100))
+    customer_id = Column(Integer, ForeignKey("customers.id"), nullable=False)
+
+
     order_date = Column(DATETIME, nullable=False, server_default=str(datetime.now()))
     order_status = Column(String(100))
     order_tracking = Column(Integer)
     description = Column(String(300))
 
     order_details = relationship("OrderDetail", back_populates="order")
+    customer = relationship("Customer", back_populates="orders")
