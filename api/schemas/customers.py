@@ -4,10 +4,10 @@ from pydantic import BaseModel
 
 
 class CustomerBase(BaseModel):
-    customer_name: str
+    customer_name: Optional[str] = None
     customer_email: str
-    customer_phone: str
-    customer_address: str
+    customer_phone: Optional[str] = None
+    customer_address: Optional[str] = None
 
 
 class CustomerCreate(CustomerBase):
