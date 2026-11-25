@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, Integer, String, DECIMAL, DATETIME
+from sqlalchemy import Column, ForeignKey, Integer, String, DATETIME
 from sqlalchemy.orm import relationship
 from datetime import datetime
 from ..dependencies.database import Base
@@ -11,4 +11,5 @@ class Promotion(Base):
     expiration_date = Column(String(10))
     discount = Column(DECIMAL(2,2))
 
-    menu_item = relationship("MenuItem", back_populates="promotions")
+    # Relationship(s)
+    orders = relationship("Order", back_populates="promotion")

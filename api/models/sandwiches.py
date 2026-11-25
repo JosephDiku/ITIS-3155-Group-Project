@@ -10,11 +10,11 @@ class Sandwich(Base):
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     sandwich_name = Column(String(100), unique=True, nullable=True)
     price = Column(DECIMAL(4, 2), nullable=False, server_default='0.0')
-    calories = Column(DECIMAL(4,2), nullable=False, server_default='0.0')
-    ingredients = Column(String(100), unique=True, nullable=True)
+    calories = Column(Integer, nullable=False, server_default='0')
+    ingredients = Column(String(100), nullable=True)
 
+
+    # Relationship(s)
     recipes = relationship("Recipe", back_populates="sandwich")
     order_details = relationship("OrderDetail", back_populates="sandwich")
-    resources = relationship("Resources", back_populates="sandwich")
-    promotions = relationship("Promotions", back_populates="sandwich")
-    reviews = relationship("Reviews", back_populates="sandwich")
+    ratings = relationship("Rating", back_populates="sandwich")

@@ -13,6 +13,7 @@ class Customer(Base):
     customer_address = Column(String(100))
     role = Column(String(20), server_default="customer")
 
+    # Relationship(s)
     orders = relationship("Order", back_populates="customer")
-    ## ratings = relationship("Rating", back_populates="customer")
-    ## payment_info = relationship("PaymentInfo", back_populates="customer")
+    ratings = relationship("Rating", back_populates="customer")
+    payments = relationship("PaymentInfo", back_populates="customer")
