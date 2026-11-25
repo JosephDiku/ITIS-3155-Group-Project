@@ -10,7 +10,7 @@ class PaymentBase(BaseModel):
 class PaymentCreate(PaymentBase):
     pass
 
-class Paymentgit Update(PaymentBase):
+class PaymentUpdate(PaymentBase):
     card_info: Optional[str] = None
     transaction_status: Optional[str] = None
     payment_typr: Optional[str] = None
