@@ -12,8 +12,8 @@ class Rating(Base):
     customer_id = Column(Integer, ForeignKey("customers.id"), nullable=False)
     sandwich_id = Column(Integer, ForeignKey("sandwiches.id"), nullable=False)
 
-    review_text = Column(String(100))
-    score = Column(Integer)
+    review_text = Column(String(100), nullable=True)
+    score = Column(Integer, nullable=False)
 
     # Relationship(s)
     customer = relationship("Customer", back_populates="ratings")
