@@ -16,8 +16,7 @@ def create(db: Session, request):
         db.commit()
         db.refresh(new_customer)
     except SQLAlchemyError as e:
-        error = str(e.__dict__['orig'])
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
 
     return new_customer
 
@@ -25,8 +24,7 @@ def read_all(db: Session):
     try:
         result = db.query(model.Customer).all()
     except SQLAlchemyError as e:
-        error = str(e.__dict__['orig'])
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
     return result
 
 def read_one(db: Session, customer_id):
@@ -35,8 +33,7 @@ def read_one(db: Session, customer_id):
         if not customer:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Customer not found!")
     except SQLAlchemyError as e:
-        error = str(e.__dict__['orig'])
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
     return customer
 
 def read_orders(db: Session, customer_id):
@@ -45,8 +42,7 @@ def read_orders(db: Session, customer_id):
         if not customer:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Customer not found!")
     except SQLAlchemyError as e:
-        error = str(e.__dict__['orig'])
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
     return customer.orders
 
 def update(db: Session, customer_id, request):
@@ -58,8 +54,7 @@ def update(db: Session, customer_id, request):
         customer.update(update_data, synchronize_session=False)
         db.commit()
     except SQLAlchemyError as e:
-        error = str(e.__dict__['orig'])
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
     return customer.first()
 
 def delete(db: Session, customer_id):
@@ -70,6 +65,5 @@ def delete(db: Session, customer_id):
         customer.delete(synchronize_session=False)
         db.commit()
     except SQLAlchemyError as e:
-        error = str(e.__dict__['orig'])
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
     return Response(status_code=status.HTTP_204_NO_CONTENT)
