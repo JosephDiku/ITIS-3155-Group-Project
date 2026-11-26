@@ -3,7 +3,7 @@ from typing import Optional
 from pydantic import BaseModel
 
 class PaymentBase(BaseModel):
-    customer_id: Optional[str] = None
+    customer_id: Optional[int] = None
     card_last4: Optional[str] = None
     transaction_status: Optional[str] = None
     payment_type: Optional[str] = None

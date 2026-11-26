@@ -3,12 +3,15 @@ from fastapi import HTTPException, status, Response, Depends
 from ..models import orders as model
 from sqlalchemy.exc import SQLAlchemyError
 
-
 def create(db: Session, request):
     new_item = model.Order(
         customer_name=request.customer_name,
         customer_id=request.customer_id,
-        description=request.description
+        description=request.description,
+        payment_info_id = request.payment_info_id,
+        promo_id = request.promo_id,
+        order_status = request.order_status,
+        order_tracking = request.order_tracking
     )
 
     try:
@@ -16,9 +19,7 @@ def create(db: Session, request):
         db.commit()
         db.refresh(new_item)
     except SQLAlchemyError as e:
-        error = str(e.__dict__['orig'])
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
-
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
     return new_item
 
 
@@ -26,8 +27,7 @@ def read_all(db: Session):
     try:
         result = db.query(model.Order).all()
     except SQLAlchemyError as e:
-        error = str(e.__dict__['orig'])
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
     return result
 
 
@@ -37,8 +37,7 @@ def read_one(db: Session, item_id):
         if not item:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Id not found!")
     except SQLAlchemyError as e:
-        error = str(e.__dict__['orig'])
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
     return item
 
 
@@ -51,8 +50,7 @@ def update(db: Session, item_id, request):
         item.update(update_data, synchronize_session=False)
         db.commit()
     except SQLAlchemyError as e:
-        error = str(e.__dict__['orig'])
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
     return item.first()
 
 
@@ -64,6 +62,5 @@ def delete(db: Session, item_id):
         item.delete(synchronize_session=False)
         db.commit()
     except SQLAlchemyError as e:
-        error = str(e.__dict__['orig'])
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
     return Response(status_code=status.HTTP_204_NO_CONTENT)
