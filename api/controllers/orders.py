@@ -47,35 +47,35 @@ def read_all(db: Session):
     return result
 
 
-def read_one(db: Session, item_id):
+def read_one(db: Session, order_id):
     try:
-        item = db.query(model.Order).filter(model.Order.id == item_id).first()
-        if not item:
+        order = db.query(model.Order).filter(model.Order.id == order_id).first()
+        if not order:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Id not found!")
     except SQLAlchemyError as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
-    return item
+    return order
 
 
-def update(db: Session, item_id, request):
+def update(db: Session, order_id, request):
     try:
-        item = db.query(model.Order).filter(model.Order.id == item_id)
-        if not item.first():
+        order = db.query(model.Order).filter(model.Order.id == order_id)
+        if not order.first():
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Id not found!")
         update_data = request.dict(exclude_unset=True)
-        item.update(update_data, synchronize_session=False)
+        order.update(update_data, synchronize_session=False)
         db.commit()
     except SQLAlchemyError as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
-    return item.first()
+    return order.first()
 
 
-def delete(db: Session, item_id):
+def delete(db: Session, order_id):
     try:
-        item = db.query(model.Order).filter(model.Order.id == item_id)
-        if not item.first():
+        order = db.query(model.Order).filter(model.Order.id == order_id)
+        if not order.first():
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Id not found!")
-        item.delete(synchronize_session=False)
+        order.delete(synchronize_session=False)
         db.commit()
     except SQLAlchemyError as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
