@@ -8,9 +8,9 @@ class OrderDetailBase(BaseModel):
     amount: int
 
 
-class OrderDetailCreate(OrderDetailBase):
-    order_id: int
+class OrderDetailCreate(BaseModel):
     sandwich_id: int
+    amount: int
 
 class OrderDetailUpdate(BaseModel):
     order_id: Optional[int] = None

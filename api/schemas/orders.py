@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import Optional
 from pydantic import BaseModel
-from .order_details import OrderDetail
+from .order_details import OrderDetail, OrderDetailCreate
 
 
 
@@ -16,8 +16,12 @@ class OrderBase(BaseModel):
     
 
 
-class OrderCreate(OrderBase):
-    pass
+class OrderCreate(BaseModel):
+    customer_id: int
+    description: Optional[str] = None
+    payment_info_id: Optional[int] = None
+    promo_id: Optional[int] = None
+    order_details: list[OrderDetailCreate]
 
 
 class OrderUpdate(BaseModel):
