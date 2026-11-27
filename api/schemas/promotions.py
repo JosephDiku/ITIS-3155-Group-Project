@@ -11,7 +11,7 @@ class PromotionCreate(PromotionBase):
     pass
 
 class PromotionUpdate(PromotionBase):
-    promo_code: str
+    promo_code: Optional[str] = None
     expiration_date: Optional[str] = None
     discount: Optional[float] = None
 

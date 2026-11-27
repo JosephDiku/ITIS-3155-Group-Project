@@ -13,7 +13,7 @@ router = APIRouter(
 def create(promotion: schema.PromotionCreate, db: Session = Depends(get_db)):
     return controller.create(promotion=promotion, db=db)
 
-@router.get("/", response_model=schema.Promotion)
+@router.get("/", response_model=list[schema.Promotion])
 def read_all(db: Session = Depends(get_db)):
     return controller.read_all(db)
 
@@ -25,7 +25,7 @@ def read_one(promo_id: int, db: Session = Depends(get_db)):
     return promo
 
 @router.put("/{promo_id}", response_model=schema.Promotion)
-def update(promo_id: int, promotion: schema.Promotion, db: Session = Depends(get_db)):
+def update(promo_id: int, promotion: schema.PromotionUpdate, db: Session = Depends(get_db)):
     promo_db = controller.read_one(db, promo_id=promo_id)
     if promo_db is None:
         raise HTTPException(status_code=404, detail="Promotion not found")

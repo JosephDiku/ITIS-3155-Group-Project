@@ -26,7 +26,7 @@ def read_one(customer_id: int, db: Session = Depends(get_db)):
     return controller.read_one(db, customer_id=customer_id)
 
 
-@router.get("/{customer_id}", response_model=order_schema.Order)
+@router.get("/{customer_id}/orders", response_model=order_schema.Order)
 def read_orders(customer_id: int, db: Session = Depends(get_db)):
     return controller.read_orders(db, customer_id=customer_id)
 
